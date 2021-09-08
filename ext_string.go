@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/myhyh/msgpack/v5/msgpcode"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 )
 
 type extStringInfo struct {
@@ -143,7 +143,7 @@ func makeExtStringDecoder(
 			return err
 		}
 		if extID != wantedExtID {
-			return fmt.Errorf("msgpack: got ext type=%d, wanted %d", extID, wantedExtID)
+			return fmt.Errorf("msgpack: got ext type=%s, wanted %s", extID, wantedExtID)
 		}
 		return decoder(d, v, extLen)
 	})
@@ -212,7 +212,7 @@ func (d *Decoder) decodeInterfaceExtString(c byte) (interface{}, error) {
 
 	info, ok := extStringTypes[extID]
 	if !ok {
-		return nil, fmt.Errorf("msgpack: unknown ext id=%d", extID)
+		return nil, fmt.Errorf("msgpack: unknown ext id=%s", extID)
 	}
 
 	v := reflect.New(info.Type).Elem()

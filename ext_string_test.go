@@ -6,41 +6,41 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/require"
 	"code.byted.org/ad/msgpack_extstr"
 	"code.byted.org/ad/msgpack_extstr/msgpcode"
+	"github.com/stretchr/testify/require"
 )
 
 func init() {
-	msgpack.RegisterExt(9, (*ExtTest)(nil))
+	msgpack.RegisterExtString("ext_stringX", (*ExtStringTest)(nil))
 }
 
-type ExtTest struct {
+type ExtStringTest struct {
 	S string
 }
 
 var (
-	_ msgpack.Marshaler   = (*ExtTest)(nil)
-	_ msgpack.Unmarshaler = (*ExtTest)(nil)
+	_ msgpack.Marshaler   = (*ExtStringTest)(nil)
+	_ msgpack.Unmarshaler = (*ExtStringTest)(nil)
 )
 
-func (ext ExtTest) MarshalMsgpack() ([]byte, error) {
+func (ext ExtStringTest) MarshalMsgpack() ([]byte, error) {
 	return msgpack.Marshal("hello " + ext.S)
 }
 
-func (ext *ExtTest) UnmarshalMsgpack(b []byte) error {
+func (ext *ExtStringTest) UnmarshalMsgpack(b []byte) error {
 	return msgpack.Unmarshal(b, &ext.S)
 }
 
-func TestEncodeDecodeExtHeader(t *testing.T) {
-	v := &ExtTest{"world"}
+func TestEncodeDecodeExtStringHeader(t *testing.T) {
+	v := &ExtStringTest{"world"}
 
 	payload, err := v.MarshalMsgpack()
 	require.Nil(t, err)
 
 	var buf bytes.Buffer
 	enc := msgpack.NewEncoder(&buf)
-	err = enc.EncodeExtHeader(9, len(payload))
+	err = enc.EncodeExtStringHeader("ext_stringX", len(payload))
 	require.Nil(t, err)
 
 	_, err = buf.Write(payload)
@@ -50,28 +50,28 @@ func TestEncodeDecodeExtHeader(t *testing.T) {
 	err = msgpack.Unmarshal(buf.Bytes(), &dst)
 	require.Nil(t, err)
 
-	v = dst.(*ExtTest)
+	v = dst.(*ExtStringTest)
 	wanted := "hello world"
 	require.Equal(t, v.S, wanted)
 
 	dec := msgpack.NewDecoder(&buf)
-	extID, extLen, err := dec.DecodeExtHeader()
+	extID, extLen, err := dec.DecodeExtStringHeader()
 	require.Nil(t, err)
-	require.Equal(t, int8(9), extID)
+	require.Equal(t, "ext_stringX", extID)
 	require.Equal(t, len(payload), extLen)
 
 	data := make([]byte, extLen)
 	err = dec.ReadFull(data)
 	require.Nil(t, err)
 
-	v = &ExtTest{}
+	v = &ExtStringTest{}
 	err = v.UnmarshalMsgpack(data)
 	require.Nil(t, err)
 	require.Equal(t, wanted, v.S)
 }
 
-func TestExt(t *testing.T) {
-	v := &ExtTest{"world"}
+func TestExtString(t *testing.T) {
+	v := &ExtStringTest{"world"}
 	b, err := msgpack.Marshal(v)
 	if err != nil {
 		t.Fatal(err)
@@ -83,9 +83,9 @@ func TestExt(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	v, ok := dst.(*ExtTest)
+	v, ok := dst.(*ExtStringTest)
 	if !ok {
-		t.Fatalf("got %#v, wanted ExtTest", dst)
+		t.Fatalf("got %#v, wanted ExtStringTest", dst)
 	}
 
 	wanted := "hello world"
@@ -93,7 +93,7 @@ func TestExt(t *testing.T) {
 		t.Fatalf("got %q, wanted %q", v.S, wanted)
 	}
 
-	ext := new(ExtTest)
+	ext := new(ExtStringTest)
 	err = msgpack.Unmarshal(b, &ext)
 	if err != nil {
 		t.Fatal(err)
@@ -103,7 +103,7 @@ func TestExt(t *testing.T) {
 	}
 }
 
-func TestUnknownExt(t *testing.T) {
+func TestUnknownExtString(t *testing.T) {
 	b := []byte{byte(msgpcode.FixExt1), 2, 0}
 
 	var dst interface{}
@@ -118,7 +118,7 @@ func TestUnknownExt(t *testing.T) {
 	}
 }
 
-func TestSliceOfTime(t *testing.T) {
+func TestSliceOfTimeString(t *testing.T) {
 	in := []interface{}{time.Now()}
 	b, err := msgpack.Marshal(in)
 	if err != nil {
@@ -138,20 +138,20 @@ func TestSliceOfTime(t *testing.T) {
 	}
 }
 
-type customPayload struct {
+type customPayloadString struct {
 	payload []byte
 }
 
-func (cp *customPayload) MarshalMsgpack() ([]byte, error) {
+func (cp *customPayloadString) MarshalMsgpack() ([]byte, error) {
 	return cp.payload, nil
 }
 
-func (cp *customPayload) UnmarshalMsgpack(b []byte) error {
+func (cp *customPayloadString) UnmarshalMsgpack(b []byte) error {
 	cp.payload = b
 	return nil
 }
 
-func TestDecodeCustomPayload(t *testing.T) {
+func TestDecodeCustomPayloadString(t *testing.T) {
 	b, err := hex.DecodeString("c70500c09eec3100")
 	if err != nil {
 		t.Fatal(err)

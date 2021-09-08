@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/myhyh/msgpack/v5"
+	"code.byted.org/ad/msgpack_extstr"
 )
 
 type NoIntern struct {

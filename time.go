@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/myhyh/msgpack/v5/msgpcode"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 )
 
 var timeExtID int8 = -1

@@ -12,9 +12,9 @@ import (
 	"testing"
 	"time"
 
+	"code.byted.org/ad/msgpack_extstr"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 	"github.com/stretchr/testify/require"
-	"github.com/myhyh/msgpack/v5"
-	"github.com/myhyh/msgpack/v5/msgpcode"
 )
 
 //------------------------------------------------------------------------------
@@ -945,7 +945,7 @@ func TestInt64(t *testing.T) {
 		{math.MinInt8, "d080"},
 		{math.MinInt8 + 1, "d081"},
 		{-33, "d0df"},
-		{-32, "e0"},
+		{-32, "d0e0"},
 		{-31, "e1"},
 		{-1, "ff"},
 		{0, "00"},

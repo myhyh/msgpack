@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/myhyh/msgpack/v5"
+	"code.byted.org/ad/msgpack_extstr"
 )
 
 func BenchmarkDiscard(b *testing.B) {

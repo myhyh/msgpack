@@ -4,7 +4,7 @@ import (
 	"math"
 	"reflect"
 
-	"github.com/myhyh/msgpack/v5/msgpcode"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 )
 
 // EncodeUint8 encodes an uint8 in 2 bytes preserving type of the number.

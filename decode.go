@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/myhyh/msgpack/v5/msgpcode"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 )
 
 const (
@@ -435,6 +435,8 @@ func (d *Decoder) DecodeInterface() (interface{}, error) {
 	case msgpcode.FixExt1, msgpcode.FixExt2, msgpcode.FixExt4, msgpcode.FixExt8, msgpcode.FixExt16,
 		msgpcode.Ext8, msgpcode.Ext16, msgpcode.Ext32:
 		return d.decodeInterfaceExt(c)
+	case msgpcode.ExtStr:
+		return d.decodeInterfaceExtString(c)
 	}
 
 	return 0, fmt.Errorf("msgpack: unknown code %x decoding interface{}", c)

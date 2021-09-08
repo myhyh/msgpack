@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/myhyh/msgpack/v5/msgpcode"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 )
 
 func (d *Decoder) bytesLen(c byte) (int, error) {

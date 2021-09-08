@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/myhyh/msgpack/v5/msgpcode"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 )
 
 const (

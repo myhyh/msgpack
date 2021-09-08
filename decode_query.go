@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/myhyh/msgpack/v5/msgpcode"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 )
 
 type queryResult struct {

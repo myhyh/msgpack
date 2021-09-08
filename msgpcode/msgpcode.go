@@ -2,7 +2,7 @@ package msgpcode
 
 var (
 	PosFixedNumHigh byte = 0x7f
-	NegFixedNumLow  byte = 0xe0
+	NegFixedNumLow  byte = 0xe1
 
 	Nil byte = 0xc0
 
@@ -54,7 +54,7 @@ var (
 	Ext16    byte = 0xc8
 	Ext32    byte = 0xc9
 
-	ExtStr   byte = 0xe1
+	ExtStr   byte = 0xe0
 )
 
 func IsFixedNum(c byte) bool {

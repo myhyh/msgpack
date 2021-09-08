@@ -5,7 +5,7 @@ import (
 	"math"
 	"reflect"
 
-	"github.com/myhyh/msgpack/v5/msgpcode"
+	"code.byted.org/ad/msgpack_extstr/msgpcode"
 )
 
 const (

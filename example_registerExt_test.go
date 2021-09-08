@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/myhyh/msgpack/v5"
+	"code.byted.org/ad/msgpack_extstr"
 )
 
 // https://github.com/fluent/fluentd/wiki/Forward-Protocol-Specification-v1#eventtime-ext-format
