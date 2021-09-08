@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/vmihailenco/msgpack/v5/msgpcode"
+	"github.com/myhyh/msgpack/v5/msgpcode"
 )
 
 var errArrayStruct = errors.New("msgpack: number of fields in array-encoded struct has changed")
@@ -58,6 +58,16 @@ func (d *Decoder) DecodeMapLen() (int, error) {
 
 	if msgpcode.IsExt(c) {
 		if err = d.skipExtHeader(c); err != nil {
+			return 0, err
+		}
+
+		c, err = d.readCode()
+		if err != nil {
+			return 0, err
+		}
+	}
+	if c == msgpcode.ExtStr {
+		if err = d.skipextHeaderString(c); err != nil {
 			return 0, err
 		}
 

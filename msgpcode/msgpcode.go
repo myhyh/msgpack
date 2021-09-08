@@ -53,6 +53,8 @@ var (
 	Ext8     byte = 0xc7
 	Ext16    byte = 0xc8
 	Ext32    byte = 0xc9
+
+	ExtStr   byte = 0xe1
 )
 
 func IsFixedNum(c byte) bool {

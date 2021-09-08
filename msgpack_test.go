@@ -11,7 +11,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/vmihailenco/msgpack/v5"
+	"github.com/myhyh/msgpack/v5"
 )
 
 type nameStruct struct {

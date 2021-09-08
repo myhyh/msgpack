@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/vmihailenco/msgpack/v5/msgpcode"
+	"github.com/myhyh/msgpack/v5/msgpcode"
 )
 
 const (
@@ -540,6 +540,8 @@ func (d *Decoder) Skip() error {
 	case msgpcode.FixExt1, msgpcode.FixExt2, msgpcode.FixExt4, msgpcode.FixExt8, msgpcode.FixExt16,
 		msgpcode.Ext8, msgpcode.Ext16, msgpcode.Ext32:
 		return d.skipExt(c)
+	case msgpcode.ExtStr:
+		return d.skipExtString(c)
 	}
 
 	return fmt.Errorf("msgpack: unknown code %x", c)
